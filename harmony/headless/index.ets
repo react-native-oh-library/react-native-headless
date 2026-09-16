@@ -1,0 +1,1 @@
+export { HeadlessPackage as default } from './src/main/ets/HeadlessTurboModulesFactory';

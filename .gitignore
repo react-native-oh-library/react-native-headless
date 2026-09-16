@@ -1,62 +1,32 @@
-.vscode
-
 # OSX
-#
 .DS_Store
 
-# Xcode
-#
-build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.hmap
-*.ipa
-*.xcuserstate
-
-# Android/IntelliJ
-#
-build/
-.idea
-.gradle
-local.properties
-*.iml
-
 # node.js
-#
 node_modules/
-examples/node_modules/
 npm-debug.log
 yarn-error.log
+package-lock.json
 
-# BUCK
-buck-out/
-\.buckd/
-*.keystore
-!debug.keystore
+# Build output
+/dist
+*.tgz
 
-# fastlane
-#
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/
+# IDE
+.idea/
+.vscode/
 
-*/fastlane/report.xml
-*/fastlane/Preview.html
-*/fastlane/screenshots
+# HarmonyOS build artifacts
+harmony/**/.cxx/
+harmony/**/build/
+harmony/**/.hvigor/
+example/harmony/**/.cxx/
+example/harmony/**/build/
+example/harmony/**/.hvigor/
+example/harmony/**/oh_modules/
+example/node_modules/
 
-# Bundle artifact
-*.jsbundle
+# rn.py build hap fingerprints / local build metadata
+.rn-build/
 
-# CocoaPods
-/ios/Pods/
+# Jest coverage output
+coverage/
