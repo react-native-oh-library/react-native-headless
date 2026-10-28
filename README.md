@@ -9,7 +9,7 @@
 
 | 三方库名称 | 三方库版本（npm 地址） | 发布信息 | 支持 RN 版本 | Autolink | 编译 API 版本 | 社区基线版本 | 源码地址 |
 | ------------ | ------------ | ------------------------------ | ------------- | ------------- |------------------------ | ------------- | ------------- |
-| react-native-headless | [~0.0.5](https://www.npmjs.com/package/react-native-headless) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-headless/releases) | 0.84.* | 是 | API12+ | 0.0.4 | [master](https://github.com/react-native-oh-library/react-native-headless/tree/master) |
+| react-native-headless | [~0.0.5](https://www.npmjs.com/package/react-native-headless) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-headless/releases) | 0.72.* / 0.77.* / 0.82.* / 0.84.* | 是 | API12+ | 0.0.4 | [master](https://github.com/react-native-oh-library/react-native-headless/tree/master) |
 
 ## 简介
 
@@ -35,7 +35,7 @@ yarn add @react-native-ohos/react-native-headless
 
 | 版本 | 是否支持 Autolink | RN 框架版本 |
 |--------------------------------------|----------------|-----------|
-| ～0.0.5 | 是 | 0.84.* |
+| ～0.0.5 | 是 | 0.72.* / 0.77.* / 0.82.* / 0.84.* |
 
 使用 AutoLink 的工程需要根据该文档配置，Autolink 框架指导文档：[Autolinking 文档](https://gitcode.com/CPF-RN/ohos_react_native/blob/master/docs/zh-cn/Autolinking.md)
 
@@ -142,7 +142,10 @@ ohpm install
 
 本文档内容基于以下版本验证通过：
 
-1.RNOH: 0.84.2; SDK: HarmonyOS 6.0.0 Release SDK; IDE: DevEco Studio 6.0.2.636; ROM: 6.0.0.125;
+1.RNOH: 0.72.20; SDK: HarmonyOS NEXT Developer Beta1; IDE: DevEco Studio 5.0.3.200; ROM: 3.0.0.18;
+2.RNOH: 0.77.18; SDK: HarmonyOS 6.0.0 Release SDK; IDE: DevEco Studio 6.0.0.868; ROM: 6.0.0.112;
+3.RNOH: 0.82.1; SDK: HarmonyOS 6.0.1 Release SDK; IDE: DevEco Studio 6.0.1 Release; ROM: 6.0.0.120 SP7;
+4.RNOH: 0.84.2; SDK: HarmonyOS 6.0.0 Release SDK; IDE: DevEco Studio 6.0.2.636; ROM: 6.0.0.125;
 
 ### 权限要求
 
@@ -257,7 +260,7 @@ await Headless.noLock(); // Android/鸿蒙均为 no-op（与 Android 源码空�
 
 | 名称 | 类型 | 必填 | Platform | HarmonyOS 平台支持 | 描述 |
 |------|------|------|----------|-------------------|------|
-| Headless | `NativeModule` / `TurboModule` | 是 | Android, HarmonyOS | yes | 默认导出，模块名 `HeadlessModule` |
+| Headless | `NativeModule` / `TurboModule` | 是 | Android | yes | 默认导出，模块名 `HeadlessModule` |
 
 ### API
 
@@ -265,7 +268,7 @@ await Headless.noLock(); // Android/鸿蒙均为 no-op（与 Android 源码空�
 |------|------|----------|--------|------|----------|-------------------|------|
 | startService | function | 无 | `Promise<void>` | 否 | Android, HarmonyOS | yes | 启动后台任务。Harmony：申请长时任务 + 系统通知；Android：启动 Foreground Service。成功后 Harmony 每 2s 发送 `HeadlessTick`。重复调用幂等。 |
 | stopService | function | 无 | `Promise<void>` | 否 | Android, HarmonyOS | yes | 停止后台任务，撤销通知与周期事件。未运行时静默成功（与 Android 语义对等）。 |
-| toForeground | function | 无 | `Promise<void>` | 否 | Android, HarmonyOS | partially | 尝试将应用拉到前台。Android：`startActivity(MainActivity)` 可从后台拉起。Harmony：`startAbility` 拉起自身 UIAbility；**应用在后台时普通三方应用会被系统拒绝**（[组件启动规则](https://gitcode.com/openharmony/docs/blob/OpenHarmony-6.0-Release/zh-cn/application-dev/application-models/component-startup-rules.md)）。 |
+| toForeground | function | 无 | `Promise<void>` | 否 | Android, HarmonyOS | no | 尝试将应用拉到前台。Android：`startActivity(MainActivity)` 可从后台拉起。Harmony：`startAbility` 拉起自身 UIAbility；**应用在后台时普通三方应用会被系统拒绝**（[组件启动规则](https://gitcode.com/openharmony/docs/blob/OpenHarmony-6.0-Release/zh-cn/application-dev/application-models/component-startup-rules.md)）。 |
 | toBackground | function | 无 | `Promise<void>` | 否 | Android, HarmonyOS | yes | 将应用退到后台。Harmony：`moveAbilityToBackground()`（API 12+，真实能力）。Android 上游为空实现。 |
 | noLock | function | 无 | `Promise<void>` | 否 | Android, HarmonyOS | yes | 占位 API，立即 resolve，**不做任何操作**。对标 Android 源码空实现（`FLAG_SHOW_WHEN_LOCKED` 代码被注释未生效），不提供锁屏穿透。 |
 

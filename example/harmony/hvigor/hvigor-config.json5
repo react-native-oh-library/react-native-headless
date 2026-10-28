@@ -3,7 +3,7 @@
   "dependencies": {
     // 短路径(file:./)：tgz 由 rnohos.py build hap 自动拷进 hvigor/(见 _provision_hvigor_plugin)，
     // 避免长 file:../../node_modules/... 路径撑爆 hvigor pnpm 缓存键(ENAMETOOLONG / Win MAX_PATH)。
-    "@rnoh/hvigor-plugin": "file:./rnoh-hvigor-plugin-0.3.0.tgz"
+    "@rnoh/hvigor-plugin": "file:./rnoh-hvigor-plugin-0.84.2.tgz"
   },
   "execution": {
     // "analyze": "normal",                     /* Define the build analyze mode. Value: [ "normal" | "advanced" | "ultrafine" | false ]. Default: "normal" */

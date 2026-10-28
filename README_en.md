@@ -10,7 +10,7 @@ The version correspondence details are as follows:
 
 | Name | Version (Npm Address) | Release Information | Supported RN Version | Supported Autolink | Compile API Version | Community Baseline Version | Source Code Address |
 | --------------| -------------- | ------------------------------ | ------------- | ------------- |------------------------ | ------------ | ------------- |
-| react-native-headless | [～0.0.5](https://www.npmjs.com/package/react-native-headless) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-headless/releases) | 0.84.* | Yes | API12+ | 0.0.4 | [master](https://github.com/react-native-oh-library/react-native-headless/tree/master) |
+| react-native-headless | [～0.0.5](https://www.npmjs.com/package/react-native-headless) | [GitHub Releases](https://github.com/react-native-oh-library/react-native-headless/releases) | 0.72.* / 0.77.* / 0.82.* / 0.84.* | Yes | API12+ | 0.0.4 | [master](https://github.com/react-native-oh-library/react-native-headless/tree/master) |
 
 ## Introduction
 
@@ -36,7 +36,7 @@ yarn add @react-native-ohos/react-native-headless
 
 | Version | Supported Autolink | Supported RN Version |
 |--------------------------------------|--------------------|----------------------|
-| ～0.0.5 | Yes | 0.84.* |
+| ～0.0.5 | Yes | 0.72.* / 0.77.* / 0.82.* / 0.84.* |
 
 Projects using AutoLink need to be configured according to this document. AutoLink framework guide: [Autolinking documentation](https://gitcode.com/CPF-RN/ohos_react_native/blob/master/docs/zh-cn/Autolinking.md)
 
@@ -143,7 +143,10 @@ Then build and run the code.
 
 This document is verified based on the following versions:
 
-1.RNOH: 0.84.2; SDK: HarmonyOS 6.0.0 Release SDK; IDE: DevEco Studio 6.0.2.636; ROM: 6.0.0.125;
+1.RNOH: 0.72.20; SDK: HarmonyOS NEXT Developer Beta1; IDE: DevEco Studio 5.0.3.200; ROM: 3.0.0.18;
+2.RNOH: 0.77.18; SDK: HarmonyOS 6.0.0 Release SDK; IDE: DevEco Studio 6.0.0.868; ROM: 6.0.0.112;
+3.RNOH: 0.82.1; SDK: HarmonyOS 6.0.1 Release SDK; IDE: DevEco Studio 6.0.1 Release; ROM: 6.0.0.120 SP7;
+4.RNOH: 0.84.2; SDK: HarmonyOS 6.0.0 Release SDK; IDE: DevEco Studio 6.0.2.636; ROM: 6.0.0.125;
 
 ### Permission Requirements
 
@@ -258,17 +261,17 @@ await Headless.noLock(); // No-op on both Android and Harmony (parity with upstr
 
 | Name | Type | Required | Platform | HarmonyOS Support | Description |
 |------|------|----------|----------|-------------------|-------------|
-| Headless | `NativeModule` / `TurboModule` | Yes | Android, HarmonyOS | yes | Default export. Module name: `HeadlessModule`. |
+| Headless | `NativeModule` / `TurboModule` | Yes | Android | yes | Default export. Module name: `HeadlessModule`. |
 
 ### API
 
 | Name | Type | Parameter Type | Return Value | Required | Platform | HarmonyOS Support | Description |
 |------|------|----------------|--------------|----------|----------|-------------------|-------------|
-| startService | function | None | `Promise<void>` | No | Android, HarmonyOS | yes | Start background task. Harmony: request continuous task + system notification; Android: start Foreground Service. After success, Harmony emits `HeadlessTick` every 2s. Repeated calls are idempotent. |
-| stopService | function | None | `Promise<void>` | No | Android, HarmonyOS | yes | Stop background task, dismiss notification and periodic events. Silently succeeds when not running (parity with Android). |
-| toForeground | function | None | `Promise<void>` | No | Android, HarmonyOS | partially | Attempt to bring the app to foreground. Android: `startActivity(MainActivity)` can launch from background. Harmony: `startAbility` to self UIAbility; **rejected when app is in background for third-party apps** ([Component Startup Rules](https://gitcode.com/openharmony/docs/blob/OpenHarmony-6.0-Release/en/application-dev/application-models/component-startup-rules.md)). |
-| toBackground | function | None | `Promise<void>` | No | Android, HarmonyOS | yes | Move app to background. Harmony: `moveAbilityToBackground()` (API 12+, real capability). Upstream Android is a no-op. |
-| noLock | function | None | `Promise<void>` | No | Android, HarmonyOS | yes | Placeholder API, resolves immediately, **does nothing**. Parity with upstream Android empty implementation (`FLAG_SHOW_WHEN_LOCKED` code commented out). Does not provide lock-screen bypass. |
+| startService | function | None | `Promise<void>` | No | Android | yes | Start background task. Harmony: request continuous task + system notification; Android: start Foreground Service. After success, Harmony emits `HeadlessTick` every 2s. Repeated calls are idempotent. |
+| stopService | function | None | `Promise<void>` | No | Android | yes | Stop background task, dismiss notification and periodic events. Silently succeeds when not running (parity with Android). |
+| toForeground | function | None | `Promise<void>` | No | Android | no | Attempt to bring the app to foreground. Android: `startActivity(MainActivity)` can launch from background. Harmony: `startAbility` to self UIAbility; **rejected when app is in background for third-party apps** ([Component Startup Rules](https://gitcode.com/openharmony/docs/blob/OpenHarmony-6.0-Release/en/application-dev/application-models/component-startup-rules.md)). |
+| toBackground | function | None | `Promise<void>` | No | Android | yes | Move app to background. Harmony: `moveAbilityToBackground()` (API 12+, real capability). Upstream Android is a no-op. |
+| noLock | function | None | `Promise<void>` | No | Android | yes | Placeholder API, resolves immediately, **does nothing**. Parity with upstream Android empty implementation (`FLAG_SHOW_WHEN_LOCKED` code commented out). Does not provide lock-screen bypass. |
 
 ### Events
 
@@ -298,7 +301,7 @@ await Headless.noLock(); // No-op on both Android and Harmony (parity with upstr
 |------------|----------|-------------------|--------|
 | Boot auto-start (BootUpReceiver / BOOT_COMPLETED) | Android | no | HarmonyOS does not expose boot broadcast to third-party apps; `ohos.permission.RECEIVER_STARTUP_COMPLETED` is system-only |
 | AppRegistry.registerHeadlessTask | Android | no | RNOH has no HeadlessJsTaskService equivalent; degraded to `HeadlessTick` events |
-| Lock-screen bypass display | Android, HarmonyOS | no | Not implemented in upstream Android source; Harmony requires [Live View Kit](https://developer.huawei.com/consumer/en/doc/harmonyos-guides/liveview-preparations) |
+| Lock-screen bypass display | Android | no | Not implemented in upstream Android source; Harmony requires [Live View Kit](https://developer.huawei.com/consumer/en/doc/harmonyos-guides/liveview-preparations) |
 
 ## Quick Verification (Run Example)
 
